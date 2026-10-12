@@ -1,0 +1,29 @@
+services:
+  api:
+    build: .
+    command: ["python", "-m", "relay", "serve", "--host", "0.0.0.0", "--db", "/data/outbox.db"]
+    env_file: .env
+    ports: ["127.0.0.1:8000:8000"]
+    volumes: ["outbox:/data"]
+    restart: unless-stopped
+  worker:
+    build: .
+    command: ["python", "-m", "relay", "worker", "--db", "/data/outbox.db", "--url", "http://receiver:9000/webhook"]
+    env_file: .env
+    volumes: ["outbox:/data"]
+    depends_on: [receiver, api]
+    stop_grace_period: 15s
+    restart: unless-stopped
+  receiver:
+    build: .
+    command: ["python", "demo_receiver.py"]
+    env_file: .env
+    environment:
+      RECEIVER_HOST: 0.0.0.0
+      RECEIVER_DB: /data/receiver.db
+    volumes: ["receiver:/data"]
+    restart: unless-stopped
+
+volumes:
+  outbox:
+  receiver:
