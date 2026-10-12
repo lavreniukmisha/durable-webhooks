@@ -1,5 +1,8 @@
 # durable-webhooks
 
+[![tests](https://github.com/lavreniukmisha/durable-webhooks/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/lavreniukmisha/durable-webhooks/actions/workflows/tests.yml)
+[![Python 3.11, 3.12, 3.13](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-3776AB?logo=python&logoColor=white)](https://github.com/lavreniukmisha/durable-webhooks/blob/main/.github/workflows/tests.yml)
+
 A small webhook outbox in Python. Accept an event, keep it on disk, and let a
 worker deliver it. No runtime dependencies.
 
